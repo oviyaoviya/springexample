@@ -72,30 +72,14 @@ public class Emp {
 		return relievingDate;
 	}
 
-	public void setRelievingDate(String relievingDate1) throws ParseException {
-		/*
-		 * System.out.println("relieving date:"+relievingDate); Date date = new
-		 * Date(); System.out.println("new date: "+date);
-		 */
-		/*
-		 * SimpleDateFormat formatter = new
-		 * SimpleDateFormat("MM/dd/yyyy hh:mm:ss"); String strDate =
-		 * formatter.format(date); System.out.println("Date Format  : "
-		 * +strDate); System.out.println("tostring values : "+this.toString());
-		 */
-
-		/*
-		 * String sDate1="31-Dec-1998"; SimpleDateFormat formatter1=new
-		 * SimpleDateFormat("dd-MMM-yyyy"); Date date1=formatter1.parse(sDate1);
-		 * System.out.println(sDate1+"\t"+date1); this.relievingDate = date1;
-		 */
+	public void setRelievingDate(String relievingDate) throws ParseException {
 		// String dateInString = "7-Jun-2013";
-		System.out.println("releaving date is:-" + relievingDate1);
-		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+		System.out.println("releaving date is:-" + relievingDate);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
 
-			Date utilDate = formatter.parse(relievingDate1);
+			Date utilDate = formatter.parse(relievingDate);
 			System.out.println("utilDate is:-" + utilDate);
 			this.relievingDate = utilDate;
 		} catch (ParseException e) {
@@ -103,21 +87,7 @@ public class Emp {
 		} finally {
 			System.out.println("finalyy block date:- " + relievingDate);
 		}
-
-		/*
-		 * String rawDate = "2015-05-12 15:15:24";
-		 * 
-		 * SimpleDateFormat format = new
-		 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); Date date =
-		 * format.parse(rawDate); java.sql.Date sqlDate = new
-		 * java.sql.Date(date.getTime());
-		 * 
-		 * SimpleDateFormat changedFormat = new SimpleDateFormat("YYYY-MM-DD");
-		 * System.out.println("Formatted Date: " +
-		 * changedFormat.format(sqlDate));
-		 */
-		// this.relievingDate = date;
-	}
+		}
 
 	public String getDesignation() {
 		return designation;

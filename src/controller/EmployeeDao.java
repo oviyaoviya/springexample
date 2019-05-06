@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class EmployeeDao {
 	JdbcTemplate template;
-
+  
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
 	}
@@ -78,6 +78,21 @@ public class EmployeeDao {
 		return template.queryForObject(sql, new Object[] { id },
 				new BeanPropertyRowMapper<Emp>(Emp.class));
 	}
+	
+	public Emp getEmpByEmail(String email) {
+		String sql = "select * from EmployeeDetails where email=?";
+		Emp emp = null;
+		try {
+			emp = template.queryForObject(sql,
+					new Object[] { email },
+					new BeanPropertyRowMapper<Emp>(Emp.class));
+		} catch (EmptyResultDataAccessException e) {
+			System.out.println("No result found");
+		}
+		System.out.println("The employee email:- "
+				+ emp);
+		return emp;
+	}
 
 	public int delete(int id) {
 		String sql = "delete from EmployeeDetails where id=" + id + "";
@@ -111,11 +126,19 @@ public class EmployeeDao {
 						e.setId(rs.getInt(1));
 						e.setName(rs.getString(2));
 						e.setDob(rs.getString(3));
-//						e.setRelievingDate(rs.getDate(4));
-//				        e.setRelievingDate(rs.getString(4));
-//						e.setRelievingDate(rs.getDate(4));
-						//	System.out.println(rs.getDate(4));
-						System.out.println(rs.getString(4));
+					
+						System.out.println(rs.getDate(4));
+						if(rs.getDate(4) != null){
+							try {
+								e.setRelievingDate(rs.getString(4));
+							} catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						else{
+							System.out.println("relieving date is null ");
+						}
 						// System.out.println(rs.getString(3));
 						e.setJoiningDate(rs.getString(5));
 						e.setDesignation(rs.getString(6));
@@ -128,6 +151,7 @@ public class EmployeeDao {
 						e.setSkill(rs.getString(13));
 						e.setMobile(rs.getString(14));
 						e.setEmail(rs.getString(15));
+						 
 						e.setPassword(rs.getString(16));
 						e.setDescription(rs.getString(17));
 						return e;

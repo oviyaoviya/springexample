@@ -45,6 +45,12 @@ th {
     <td>Employee JoiningDate</td>
     <td>${employee.joiningDate}</td>
   </tr>
+  
+   <tr>
+    <td>Employee RelievingDate</td>
+    <td>${employee.relievingDate}</td>
+  </tr>
+  
    <tr>
     <td>Employee Designation</td>
     <td>${employee.designation}</td>

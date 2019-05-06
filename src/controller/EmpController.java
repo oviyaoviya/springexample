@@ -1,13 +1,18 @@
 package controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class EmpController {
 	@Autowired
 	EmployeeDao employeeDao;
+	private static final Logger logger = Logger.getAnonymousLogger();
 
 	@RequestMapping("/index")
 	public String showform() {
@@ -34,30 +40,52 @@ public class EmpController {
 	public String showFormDetail() {
 		return "success";
 	}
-
-	/*
-	 * @RequestMapping("/viewEmployee") public String Form(){ return
-	 * "viewEmployee"; }
-	 */
+	
+	/*@InitBinder
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");   	
+	    dateFormat.setLenient(false);
+	    binder.registerCustomEditor(Date.class, null,  new CustomDateEditor(dateFormat, true));
+	}
+	*/
+	@InitBinder     
+	public void initBinder(WebDataBinder binder){
+	     binder.registerCustomEditor(       Date.class,     
+	                         new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));   
+	}	
+		
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute("emp") Emp emp) {
-		System.out.println("print name:" + emp.toString());
-		System.out.println("Date is :" +emp.getRelievingDate());
-		employeeDao.save(emp);
-		return "redirect:viewEmployee";
+	public String save(@ModelAttribute("emp") Emp emp,
+	HttpSession session,
+			ModelMap modelMap) {
+		logger.info("get all details from db :"+toString());
+		String email = emp.getEmail();
+		logger.info("coming into controller...");
+		Emp employee = employeeDao.getEmpByEmail(email);
+		logger.info("Employee details "+ employee);
+		if(employee == null ){
+			modelMap.put("email", emp.getEmail());
+			employeeDao.save(emp);
+			return "employeeList";
+		}else{
+//			modelMap.put("error", "Invalid Account");
+			logger.info("already exist");
+			return "employeeForm";
+		}
+	
 	}
 
 	@RequestMapping(value = "/editemp/{id}")
 	public String edit(@PathVariable int id, Model m) {
 		Emp emp = employeeDao.getEmpById(id);
-		System.out.println("print Edit Values:" + emp.toString());
+		logger.info("print Edit Values:" + emp.toString());
 		m.addAttribute("employee", emp);
 		return "empeditform";
 	}
 
 	@RequestMapping(value = "/editsave", method = RequestMethod.POST)
 	public String editsave(@ModelAttribute("emp") Emp emp) {
-		System.out.println("print Editsave Values:" + emp.toString());
+		logger.info("print Editsave Values:" + emp.toString());
 		employeeDao.update(emp);
 		return "redirect:/employeeList";
 	}
@@ -70,7 +98,7 @@ public class EmpController {
 	@RequestMapping(value = "/viewemp/{id}")
 	public String view(@PathVariable int id, Model m) {
 		Emp emp = employeeDao.getEmpById(id);
-		System.out.println("print view Values:" + emp.toString());
+		logger.info("print view Values:" + emp.toString());
 		m.addAttribute("employee", emp);
 		return "viewEmployeeDetails";
 	}
@@ -91,8 +119,8 @@ public class EmpController {
 			@RequestParam("password") String password, HttpSession session,
 			ModelMap modelMap) {
 		Emp emp = employeeDao.employeeLogin(email, password);
-		System.out.println("employee details:" + emp);
-		System.out.println("employee email"+emp.getEmail());
+//		logger.info("employee details:" + emp);
+//		logger.info("employee email"+emp.getEmail());
 
 		if (emp != null) {
 			modelMap.put("email", emp.getEmail());
