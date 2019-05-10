@@ -95,8 +95,10 @@
 			
 			<tr>
 			<td>Email</td>
+
 			<td><input type="text" name="email" value="<c:out value="${employee.email}"/>" ></td>
 			<td><c:if test="${employee.email eq null}">already Exist</c:if></td>
+
 			</tr>
 			
 			<tr>

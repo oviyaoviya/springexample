@@ -2,9 +2,6 @@ package controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,10 +17,12 @@ public class EmployeeDao {
 	}
 
 	public int save(Emp p) {
+
 //		Date releavingDate = p.getRelievingDate();
 //		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 //		  String utilDate = formatter.format(releavingDate);
 //		System.out.println("utilDate in dao class is:-" + utilDate);
+
 	
 		String sql = "insert into EmployeeDetails(name,dob,joiningDate,relievingDate,designation,addressLine1,addressLine2,city,state,pincode,gender,skill,mobile,email,password,description) values('"
 				+ p.getName()
@@ -31,8 +30,6 @@ public class EmployeeDao {
 				+ p.getDob()
 				+ "','"
 				+ p.getJoiningDate()
-				+ "','"
-				+ p.getRelievingDate() 
 				+ "','"
 				+ p.getDesignation()
 				+ "','"
@@ -80,10 +77,12 @@ public class EmployeeDao {
 	}
 	
 	public Emp getEmpByEmail(String email) {
+
 		System.out.println("email in dao class :"+email);
 		String sql = "select * from EmployeeDetails where email=?";
 //		String sql1="oviya";
 		System.out.println("email in dao class1 :"+sql);
+
 
 		Emp emp = null;
 		try {
@@ -96,7 +95,9 @@ public class EmployeeDao {
 		System.out.println("The employee email:- "
 				+ emp);
 		return emp;
+
    	}
+
 
 	public int delete(int id) {
 		String sql = "delete from EmployeeDetails where id=" + id + "";
@@ -144,6 +145,7 @@ public class EmployeeDao {
 //							System.out.println("relieving date is null ");
 //						}
 						e.setRelievingDate(rs.getString(4));
+
 						e.setJoiningDate(rs.getString(5));
 						e.setDesignation(rs.getString(6));
 						e.setAddressLine1(rs.getString(7));

@@ -35,7 +35,6 @@ public class EmpController {
 	public String showForm() {
 		return "employeeForm";
 	}
-
 	@RequestMapping("/success")
 	public String showFormDetail() {
 		return "success";
@@ -90,7 +89,6 @@ public class EmpController {
 		employeeDao.delete(id);
 		return "redirect:/employeeList";
 	}
-
 	@RequestMapping(value = "/viewemp/{id}")
 	public String view(@PathVariable int id, Model m) {
 		Emp emp = employeeDao.getEmpById(id);
@@ -98,11 +96,17 @@ public class EmpController {
 		m.addAttribute("employee", emp);
 		return "viewEmployeeDetails";
 	}
-
 	@RequestMapping("/login")
 	public String showForm2() {
 		return "login";
 	}
+
+	/*
+	 * @RequestMapping(value = "/loginSubmit", method = RequestMethod.POST)
+	 * public String loginSubmit(@ModelAttribute("emp") Emp emp) {
+	 * System.out.println("print name:" + emp.toString());
+	 * employeeDao.save(emp); return "redirect:viewEmployee"; }
+	 */
 
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 	public String loginDetails(@RequestParam("email") String email,
@@ -120,6 +124,13 @@ public class EmpController {
 			return "login";
 		}
 	}
+
+	/*
+	 * if(email.equalsIgnoreCase("oviya") && password.equalsIgnoreCase("123")) {
+	 * session.setAttribute("email", email); return "success"; } else {
+	 * modelMap.put("error", "Invalid Account"); return "login"; } }
+	 */
+
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.removeAttribute("email");
@@ -137,15 +148,4 @@ public class EmpController {
 
 }
 
-/*
- * @RequestMapping(value = "/loginSubmit", method = RequestMethod.POST)
- * public String loginSubmit(@ModelAttribute("emp") Emp emp) {
- * System.out.println("print name:" + emp.toString());
- * employeeDao.save(emp); return "redirect:viewEmployee"; }
- */
 
-/*
- * if(email.equalsIgnoreCase("oviya") && password.equalsIgnoreCase("123")) {
- * session.setAttribute("email", email); return "success"; } else {
- * modelMap.put("error", "Invalid Account"); return "login"; } }
- */
