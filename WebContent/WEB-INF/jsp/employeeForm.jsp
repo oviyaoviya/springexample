@@ -6,14 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<<<<<<< HEAD
+
 <style type="text/css">
 .test {
 color :red;
 }
 </style>
-=======
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
  <script>  
 function validateform(){  
 var name=document.myform.name.value; 
@@ -108,49 +107,35 @@ return true;
         }
     }
 </script>
-</head>
-<body>
-<<<<<<< HEAD
 
-=======
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
 	<h1>Employee Form</h1>
 	<form method="post" name="myform" action="save" onsubmit="return validateform()" >
 		<table>
 			<tr>
 				<td>Employee Name:</td>
-<<<<<<< HEAD
+
 				<td><input name="name" value="${employee.name}" id="name" /></td>
-=======
-				<td><input name="name" value="" id="name" /></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr>
 			
 			 <tr>
 				<td>Employee Dob:</td>
-<<<<<<< HEAD
+
 				<td><input type="date"value="${employee.dob}" name="dob" id="dob" /></td>
-=======
-				<td><input type="date" value="" name="dob" id="dob" /></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr> 
 
               <tr>
 			<td>Employee Joining Date</td>
-<<<<<<< HEAD
+
 			<td><input type="date" name="joiningDate" id="joiningDate" value="${employee.joiningDate}"></td>
-=======
-			<td><input type="date" name="joiningDate" id="joiningDate" value=""></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr>
 			
 			<tr>
-			<td>Employee Relieving Date</td>
-<<<<<<< HEAD
+	<td>Employee Joining Date</td>
 			<td><input type="date" name="relievingDate"  id="relievingDate" value="${employee.relievingDate}"></td>
-=======
-			<td><input type="date" name="relievingDate"  id="relievingDate" value=""></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr>
 
 			<tr>
@@ -164,16 +149,14 @@ return true;
 			
 			<tr>
 				<td>AddressLine1</td>
-<<<<<<< HEAD
+
 				<td><input name="AddressLine1" value="${employee.addressLine1}" id="AddressLine1" /></td>
-=======
-				<td><input name="AddressLine1" value="" id="AddressLine1" /></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr>
 			
 			<tr>
 				<td>AddressLine2</td>
-<<<<<<< HEAD
+
 				<td><input name="AddressLine2" value="${employee.addressLine2}" /></td>
 			</tr>
 			<tr>
@@ -187,21 +170,7 @@ return true;
 			<tr>
 				<td>pincode</td>
 				<td><input name="pincode" value="${employee.pincode}" /></td>
-=======
-				<td><input name="AddressLine2" value="" /></td>
-			</tr>
-			<tr>
-				<td>city</td>
-				<td><input name="city" value=""/></td>
-			</tr>
-			<tr>
-				<td>state</td>
-				<td><input name="state" value="" /></td>
-			</tr>
-			<tr>
-				<td>pincode</td>
-				<td><input name="pincode" value="" /></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr>
 			<tr>
 				<td><label>Gender</label></td>
@@ -222,39 +191,30 @@ return true;
 			
 			<tr>
 				<td>Phone Number</td>
-<<<<<<< HEAD
+
 				<td><input type="text" name="mobile" value="${employee.mobile}"></td>
-=======
-				<td><input type="text" name="mobile" value=""></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr>
 			
 			<tr>
 			<td>Email</td>
-<<<<<<< HEAD
+
 			<td><input type="text" name="email" value="${employee.email}"></td>
 			<td><p class="test"> ${error}</p></td>
-=======
-			<td><input type="text" name="email" value=""></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr>
 			
 			<tr>
 			<td>Password</td>
-<<<<<<< HEAD
+
 			<td><input type="password" name="password" value="${employee.password}"></td>
-=======
-			<td><input type="password" name="password" value=""></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr>
 			
 			<tr>
 			<td>description</td>
-<<<<<<< HEAD
 			<td><textarea rows="5" cols="5" name="description" value="${employee.description}" ></textarea></td>
-=======
-			<td><textarea rows="5" cols="5" name="description" ></textarea></td>
->>>>>>> 5530bdb8c8b90f69f89cf6a393ff986d052112bb
+
 			</tr>
 			<tr>
 			<td><input type="submit" value="save" /></td>

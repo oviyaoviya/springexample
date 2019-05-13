@@ -22,6 +22,33 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 		  <value>.jsp</value>
 		</property>
 	</bean>
+	 <bean
+        class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
+ 
+    <bean class="controller.FirstController" />
+ 
+	 <bean
+        class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="controller.SpringException">
+                    error
+                </prop>
+            </props>
+        </property>
+    </bean>
+	<!-- 
+	<bean class = "org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+      <property name = "exceptionMappings">
+         <props>
+            <prop key = "com.tutorialspoint.SpringException">
+               ExceptionPage
+            </prop>
+         </props>
+      </property>
+      <property name = "defaultErrorView" value = "error"/>
+   </bean> -->
+	
 	
 <bean id="ds"
 	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
