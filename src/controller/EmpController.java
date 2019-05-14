@@ -1,32 +1,29 @@
 package controller;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Controller
 public class EmpController {
 	private static final Logger logger = Logger.getAnonymousLogger();
+	
 	@Autowired
 	EmployeeDao employeeDao;
 
@@ -42,13 +39,6 @@ public class EmpController {
 	@RequestMapping("/success")
 	public String showFormDetail() {
 		return "success";
-	}
-
-	@InitBinder
-	public void iProblemsnitBinder(WebDataBinder binder) {
-		System.out.println("Loading init binder...");
-		binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(
-				new SimpleDateFormat("yyyy-MM-dd"), true, 10));
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -72,6 +62,7 @@ public class EmpController {
 			return "employeeForm";
 		}
 	}
+	
 
 	@RequestMapping(value = "/editemp/{id}")
 	public String edit(@PathVariable int id, Model m) {
@@ -106,22 +97,22 @@ public class EmpController {
 	}
 
 	
-	 @RequestMapping(value = "/second", method = RequestMethod.GET)
+	 @RequestMapping(value = "/emp", method = RequestMethod.GET)
 	    public ModelAndView second() throws SpringException {
 	        System.out.println("Throwing exception");
 	        throw new SpringException("Throwing my custom Exception..");
 	    }
 	 
-	    @ExceptionHandler(SpringException.class)
+	 	@ExceptionHandler(NoHandlerFoundException.class)
+	    @ResponseStatus(HttpStatus.NOT_FOUND)
 	    public ModelAndView handleCustomException(SpringException ex) {
 	        System.out.println("Handling exception");
 	        ModelAndView model = new ModelAndView("error");
 	        model.addObject("exception", ex);
 	        return model;
-	    }
+	    } 
 	 
-	 
-	 
+	    
 //	@ExceptionHandler(SpringException.class)
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 	public String loginDetails(@RequestParam("email") String email,
@@ -158,6 +149,7 @@ public class EmpController {
 		m.addAttribute("list", list);
 		return "employeeList";
 	}
+	
 
 }
 
@@ -173,5 +165,7 @@ public class EmpController {
  * System.out.println("print name:" + emp.toString());
  * employeeDao.save(emp); return "redirect:viewEmployee"; }
  */
+
+
 
 
