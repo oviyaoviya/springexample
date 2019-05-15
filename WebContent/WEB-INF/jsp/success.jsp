@@ -12,7 +12,21 @@
 
 	<h3>Success Page</h3>
 	
-<p>	your are successfully logged in and your email address is ${email}</p>
+<%-- <p>	your are successfully logged in and your email address is ${email}</p> --%>
+<%! String name="oviya"; %>
+<%="declared name is :"+name %>
+<% 
+String email=request.getParameter("email"); 
+String password=request.getParameter("password"); 
+/* out.print("Name: "+email+" Password: "+password); */
+%> 
+<% 
+String emailId=request.getAttribute("email").toString();
+String Repassword=request.getAttribute("password").toString(); 
+/* out.print("Email: "+emailId+" RePassword: "+Repassword); */
+%> 
+<%="Email: "+emailId+" RePassword: "+Repassword %>
+
 
 
 	<br><br>

@@ -1,8 +1,11 @@
 package controller;
 
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @Controller
 public class EmpController {
 	private static final Logger logger = Logger.getAnonymousLogger();
-	
+
 	@Autowired
 	EmployeeDao employeeDao;
 
@@ -36,6 +39,7 @@ public class EmpController {
 	public String showForm() {
 		return "employeeForm";
 	}
+
 	@RequestMapping("/success")
 	public String showFormDetail() {
 		return "success";
@@ -51,18 +55,17 @@ public class EmpController {
 		logger.info("Employee details " + employee);
 		if (employee == null) {
 			modelMap.put("email", emp.getEmail());
-			System.out.println("before view details :"+emp);
+			System.out.println("before view details :" + emp);
 			employeeDao.save(emp);
 			return "employeeList";
 		} else {
 			// modelMap.put("error", "Invalid Account");
 			m.addAttribute("employee", emp);
-			modelMap.put("error", emp.getEmail()+" email is already exist");
+			modelMap.put("error", emp.getEmail() + " email is already exist");
 			logger.info("already exist");
 			return "employeeForm";
 		}
 	}
-	
 
 	@RequestMapping(value = "/editemp/{id}")
 	public String edit(@PathVariable int id, Model m) {
@@ -84,56 +87,79 @@ public class EmpController {
 		employeeDao.delete(id);
 		return "redirect:/employeeList";
 	}
+
 	@RequestMapping(value = "/viewemp/{id}")
-	public String view(@PathVariable int id, Model m) {
+	public String view(@PathVariable int id, Model m,
+			HttpServletRequest request, HttpServletResponse response) {
+		String ss = request.getRequestURI();
+		System.out.println("getPathInfo :-" + ss);
+		/*
+		 * while (ss.hasMoreElements())
+		 * System.out.println("getParameterNames is: " + ss.nextElement());
+		 */
+
 		Emp emp = employeeDao.getEmpById(id);
 		logger.info("print view Values:" + emp.toString());
 		m.addAttribute("employee", emp);
-		return "viewEmployeeDetails";
+		return "viewEmployeeDetailsV2";
 	}
+
 	@RequestMapping("/login")
 	public String showForm2() {
 		return "login";
 	}
 
-	
-	 @RequestMapping(value = "/emp", method = RequestMethod.GET)
-	    public ModelAndView second() throws SpringException {
-	        System.out.println("Throwing exception");
-	        throw new SpringException("Throwing my custom Exception..");
-	    }
-	 
-	 	@ExceptionHandler(NoHandlerFoundException.class)
-	    @ResponseStatus(HttpStatus.NOT_FOUND)
-	    public ModelAndView handleCustomException(SpringException ex) {
-	        System.out.println("Handling exception");
-	        ModelAndView model = new ModelAndView("error");
-	        model.addObject("exception", ex);
-	        return model;
-	    } 
-	 
-	    
-//	@ExceptionHandler(SpringException.class)
+	@RequestMapping(value = "/emp", method = RequestMethod.GET)
+	public ModelAndView second() throws SpringException {
+		System.out.println("Throwing exception");
+		throw new SpringException("Throwing my custom Exception..");
+	}
+
+	@ExceptionHandler(NoHandlerFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ModelAndView handleCustomException(SpringException ex) {
+		System.out.println("Handling exception");
+		ModelAndView model = new ModelAndView("error");
+		model.addObject("exception", ex);
+		return model;
+	}
+
+	// @ExceptionHandler(SpringException.class)
 	@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
 	public String loginDetails(@RequestParam("email") String email,
 			@RequestParam("password") String password, HttpSession session,
-			ModelMap modelMap) {
+			ModelMap modelMap, Model m, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Enumeration<String> ss = request.getParameterNames();
+
+		while (ss.hasMoreElements())
+			System.out.println("getParameterNames is: " + ss.nextElement());
+
+		Enumeration<String> ss1 = request.getAttributeNames();
+
+		while (ss1.hasMoreElements())
+			System.out.println("getAttributeNames is: " + ss1.nextElement());
+
 		Emp emp = employeeDao.employeeLogin(email, password);
 		// logger.info("employee details:" + emp);
 		// logger.info("employee email"+emp.getEmail());
 
 		if (emp != null) {
-		modelMap.put("email", emp.getEmail());
+			modelMap.put("email", emp.getEmail());
+			m.addAttribute("email", emp.getEmail());
+			m.addAttribute("password", emp.getPassword());
+			System.out.println(" addAttribute email :"+emp.getEmail());
+			System.out.println(" addAttribute email :"+emp.getPassword());
 			return "success";
-//			 throw new SpringException("user name & password is correct");
+			// throw new SpringException("user name & password is correct");
 		}
-		
+
 		else {
 			modelMap.put("error", "Invalid Account");
 			return "login";
 		}
 	}
-
 
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
@@ -149,7 +175,6 @@ public class EmpController {
 		m.addAttribute("list", list);
 		return "employeeList";
 	}
-	
 
 }
 
@@ -160,12 +185,9 @@ public class EmpController {
  */
 
 /*
- * @RequestMapping(value = "/loginSubmit", method = RequestMethod.POST)
- * public String loginSubmit(@ModelAttribute("emp") Emp emp) {
- * System.out.println("print name:" + emp.toString());
- * employeeDao.save(emp); return "redirect:viewEmployee"; }
+ * @RequestMapping(value = "/loginSubmit", method = RequestMethod.POST) public
+ * String loginSubmit(@ModelAttribute("emp") Emp emp) {
+ * System.out.println("print name:" + emp.toString()); employeeDao.save(emp);
+ * return "redirect:viewEmployee"; }
  */
-
-
-
 
