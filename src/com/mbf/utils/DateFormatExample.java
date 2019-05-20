@@ -1,8 +1,8 @@
-package controller;
+package com.mbf.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;  
-public class DateFormatExamplev2 {
+public class DateFormatExample {
 
 	public static void main(String[] args) throws ParseException {
 	     Date currentDate = new Date();  

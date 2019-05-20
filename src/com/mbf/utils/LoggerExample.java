@@ -1,4 +1,4 @@
-package controller;
+package com.mbf.utils;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,4 +1,4 @@
-package controller;
+package com.mbf.controller;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -23,10 +23,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-@Controller
-public class EmpController {
-	private static final Logger logger = Logger.getAnonymousLogger();
+import com.mbf.exceptions.SpringException;
+import com.mbf.model.Employee;
+import com.mbf.repository.EmployeeDao;
 
+@Controller
+public class EmployeeController {
+	private static final Logger logger = Logger.getAnonymousLogger();
+	
 	@Autowired
 	EmployeeDao employeeDao;
 
@@ -39,6 +43,7 @@ public class EmpController {
 	public String showForm() {
 		return "employeeForm";
 	}
+	
 
 	@RequestMapping("/success")
 	public String showFormDetail() {
@@ -46,12 +51,12 @@ public class EmpController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute("emp") Emp emp, HttpSession session,
+	public String save(@ModelAttribute("emp") Employee emp, HttpSession session,
 			ModelMap modelMap, Model m) {
 
 		String email = emp.getEmail();
 		logger.info("coming into controller...");
-		Emp employee = employeeDao.getEmpByEmail(email);
+		Employee employee = employeeDao.getEmpByEmail(email);
 		logger.info("Employee details " + employee);
 		if (employee == null) {
 			modelMap.put("email", emp.getEmail());
@@ -69,14 +74,14 @@ public class EmpController {
 
 	@RequestMapping(value = "/editemp/{id}")
 	public String edit(@PathVariable int id, Model m) {
-		Emp emp = employeeDao.getEmpById(id);
+		Employee emp = employeeDao.getEmpById(id);
 		logger.info("print Edit Values:" + emp.toString());
 		m.addAttribute("employee", emp);
 		return "empeditform";
 	}
 
 	@RequestMapping(value = "/editsave", method = RequestMethod.POST)
-	public String editsave(@ModelAttribute("emp") Emp emp) {
+	public String editsave(@ModelAttribute("emp") Employee emp) {
 		logger.info("print Editsave Values:" + emp.toString());
 		employeeDao.update(emp);
 		return "redirect:/employeeList";
@@ -98,7 +103,7 @@ public class EmpController {
 		 * System.out.println("getParameterNames is: " + ss.nextElement());
 		 */
 
-		Emp emp = employeeDao.getEmpById(id);
+		Employee emp = employeeDao.getEmpById(id);
 		logger.info("print view Values:" + emp.toString());
 		m.addAttribute("employee", emp);
 		return "viewEmployeeDetailsV2";
@@ -141,7 +146,7 @@ public class EmpController {
 		while (ss1.hasMoreElements())
 			System.out.println("getAttributeNames is: " + ss1.nextElement());
 
-		Emp emp = employeeDao.employeeLogin(email, password);
+		Employee emp = employeeDao.employeeLogin(email, password);
 		// logger.info("employee details:" + emp);
 		// logger.info("employee email"+emp.getEmail());
 
@@ -170,7 +175,7 @@ public class EmpController {
 	@RequestMapping("/viewEmployee")
 	public String viewemp(Model m) {
 		/* System.out.println("view Employee Details"); */
-		List<Emp> list = employeeDao.getEmployees();
+		List<Employee> list = employeeDao.getEmployees();
 		/* System.out.println("total number of employees:"+list.size()); */
 		m.addAttribute("list", list);
 		return "employeeList";

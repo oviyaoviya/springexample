@@ -32,5 +32,6 @@ String Repassword=request.getAttribute("password").toString();
 	<br><br>
 	<a href="logout">Logout</a>
 	<a href="viewEmployee">ViewEmployeeListing</a>
+	<a href="getAllCountries">GetAllCountries</a>
 </body>
 </html>

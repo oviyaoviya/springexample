@@ -1,4 +1,4 @@
-package controller;
+package com.mbf.utils;
 
 public class AddFunction {
 	public static String Add(int c, String d) {

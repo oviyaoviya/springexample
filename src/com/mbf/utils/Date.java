@@ -1,11 +1,11 @@
-package controller;
+package com.mbf.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Locale;
 
-public class Datev2 {
+public class Date {
 	/*Date today =new Date();
     public void Show(){
     	System.out.println("Date is"+today);

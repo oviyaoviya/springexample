@@ -1,6 +1,7 @@
-package controller;
+package com.mbf.model;
 
-public class Emp {
+
+public class Employee {
 	private int id;
 	private String name;
 	private String dob;

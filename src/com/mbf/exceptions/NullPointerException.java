@@ -1,6 +1,6 @@
-package controller;
+package com.mbf.exceptions;
 
-public class NullException {
+public class NullPointerException {
 
 	public static void main(String[] args) {
 		 String ptr = null;

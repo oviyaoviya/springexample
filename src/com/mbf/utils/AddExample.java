@@ -1,4 +1,5 @@
-package controller;
+package com.mbf.utils;
+
 
 public class AddExample  {
 	

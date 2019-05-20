@@ -1,4 +1,4 @@
-package controller;
+package com.mbf.exceptions;
 
 public class SpringException extends Exception {
 	 private static final long serialVersionUID = -4744430183523721711L;

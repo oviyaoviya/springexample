@@ -1,16 +1,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-3.0.xsd
 http://www.springframework.org/schema/aop
-http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	<context:annotation-config />
-	<context:component-scan base-package="controller" />
+	<context:component-scan base-package="com.mbf" />
+	<jpa:repositories base-package="com.mbf.repository" />
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -22,16 +25,16 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 			<value>.jsp</value>
 		</property>
 	</bean>
-	<bean
-		class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
+	<!-- <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" 
+		/> -->
 
-	<bean class="controller.FirstController" />
+	<!-- <bean class="controller.FirstController" /> -->
 
 	<bean
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
-				<prop key="controller.SpringException">
+				<prop key="com.mbf.exceptions.SpringException">
 					error
 				</prop>
 			</props>
@@ -43,6 +46,8 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 		value = "error"/> </bean> -->
 
 
+
+
 	<bean id="ds"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
@@ -51,11 +56,27 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 		<property name="password" value="root"></property>
 	</bean>
 
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="ds" />
+		<property name="packagesToScan" value="com.mbf" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
 	<bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="ds"></property>
 	</bean>
 
-	<bean id="dao" class="controller.EmployeeDao">
+	<bean id="dao" class="com.mbf.repository.EmployeeDao">
 		<property name="template" ref="jt"></property>
 	</bean>
 

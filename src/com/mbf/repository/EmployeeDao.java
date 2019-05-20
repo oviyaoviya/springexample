@@ -1,4 +1,4 @@
-package controller;
+package com.mbf.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +9,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.mbf.model.Employee;
+import com.mbf.model.GenderType;
+
 public class EmployeeDao {
 	JdbcTemplate template;
   
@@ -16,7 +19,7 @@ public class EmployeeDao {
 		this.template = template;
 	}
 
-	public int save(Emp p) {
+	public int save(Employee p) {
 
 //		Date releavingDate = p.getRelievingDate();
 //		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -55,7 +58,7 @@ public class EmployeeDao {
 		return template.update(sql);
 	}
 
-	public int update(Emp p) {
+	public int update(Employee p) {
 		String sql = "update EmployeeDetails set  name='" + p.getName()
 				+ "', dob='" + p.getDob() + "',joiningDate='"
 				+ p.getJoiningDate() + "',relievingDate='"
@@ -70,13 +73,13 @@ public class EmployeeDao {
 		return template.update(sql);
 	}
 
-	public Emp getEmpById(int id) {
+	public Employee getEmpById(int id) {
 		String sql = "select * from EmployeeDetails where id=?";
 		return template.queryForObject(sql, new Object[] { id },
-				new BeanPropertyRowMapper<Emp>(Emp.class));
+				new BeanPropertyRowMapper<Employee>(Employee.class));
 	}
 	
-	public Emp getEmpByEmail(String email) {
+	public Employee getEmpByEmail(String email) {
 
 		System.out.println("email in dao class :"+email);
 		String sql = "select * from EmployeeDetails where email=?";
@@ -84,11 +87,11 @@ public class EmployeeDao {
 		System.out.println("email in dao class1 :"+sql);
 
 
-		Emp emp = null;
+		Employee emp = null;
 		try {
 			emp = template.queryForObject(sql,
 					new Object[] { email },
-					new BeanPropertyRowMapper<Emp>(Emp.class));
+					new BeanPropertyRowMapper<Employee>(Employee.class));
 		} catch (EmptyResultDataAccessException e) {
 			System.out.println("No result found");
 		}
@@ -104,16 +107,16 @@ public class EmployeeDao {
 		return template.update(sql);
 	}
 
-	public Emp employeeLogin(String email, String password) {
+	public Employee employeeLogin(String email, String password) {
 		System.out.println("email" + email);
 		System.out.println("password" + password);
 		String sql = "select * from EmployeeDetails where email = ? and password = ?";
 		System.out.println("employee login" + sql);
-		Emp emp = null;
+		Employee emp = null;
 		try {
 			emp = template.queryForObject(sql,
 					new Object[] { email, password },
-					new BeanPropertyRowMapper<Emp>(Emp.class));
+					new BeanPropertyRowMapper<Employee>(Employee.class));
 		} catch (EmptyResultDataAccessException e) {
 			System.out.println("No result found");
 		}
@@ -122,12 +125,12 @@ public class EmployeeDao {
 		return emp;
 	}
 
-	public List<Emp> getEmployees() {
+	public List<Employee> getEmployees() {
 		return template.query("select * from EmployeeDetails",
-				new RowMapper<Emp>() {
-					public Emp mapRow(ResultSet rs, int row)
+				new RowMapper<Employee>() {
+					public Employee mapRow(ResultSet rs, int row)
 							throws SQLException {
-						Emp e = new Emp();
+						Employee e = new Employee();
 						e.setId(rs.getInt(1));
 						e.setName(rs.getString(2));
 						e.setDob(rs.getString(3));
