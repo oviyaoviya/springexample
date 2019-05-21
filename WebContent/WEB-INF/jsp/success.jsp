@@ -27,11 +27,11 @@ String Repassword=request.getAttribute("password").toString();
 %> 
 <%="Email: "+emailId+" RePassword: "+Repassword %>
 
-
-
 	<br><br>
+	
+	<a href="viewEmployee">View All Employees</a><br>
+	<a href="getAllCountries">View All Countries</a><br>
+	<a href="getAllCustomer">View All Customers</a><br>
 	<a href="logout">Logout</a>
-	<a href="viewEmployee">ViewEmployeeListing</a>
-	<a href="getAllCountries">GetAllCountries</a>
 </body>
 </html>

@@ -15,53 +15,55 @@ import com.mbf.service.CountryService;
 
 @Controller
 public class CountryController {
-	@Autowired
-	 CountryService countryService;
-	 
-	/*@RequestMapping("/getAllCountries")
-	public String showForm(){
-		return "countryDetails";
-	}*/
-	 @RequestMapping(value = "/getAllCountries", method = RequestMethod.GET, headers = "Accept=application/json")
-	 public String getCountries(Model model) {
-	  
-	  List listOfCountries = countryService.getAllCountries();
-	  model.addAttribute("country", new Country());
-	  model.addAttribute("listOfCountries", listOfCountries);
-	  return "countryDetails";
-	 }
-	 
 	
-	 @RequestMapping(value = "/getCountry/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	 public Country getCountryById(@PathVariable int id) {
-	  return countryService.getCountry(id);
-	 }
-	 
-	 @RequestMapping(value = "/addCountry", method = RequestMethod.POST, headers = "Accept=application/json")
-	 public String addCountry(@ModelAttribute("country") Country country) { 
-		System.out.println("country name before controller"+country.getCountryName());
-	  if(country.getId()==0)
-	  {
-	   countryService.addCountry(country);
-	  }
-	  else
-	  { 
-	   countryService.updateCountry(country);
-	  }
-	  
-	  return "redirect:/getAllCountries";
-	 }
-	 @RequestMapping(value = "/updateCountry/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	 public String updateCountry(@PathVariable("id") int id,Model model) {
-	   model.addAttribute("country", this.countryService.getCountry(id));
-	         model.addAttribute("listOfCountries", this.countryService.getAllCountries());
-	         return "countryDetails";
-	 }
-	 
-	 @RequestMapping(value = "/deleteCountry/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	 public String deleteCountry(@PathVariable("id") int id) {
-	  countryService.deleteCountry(id);
-	   return "redirect:/getAllCountries";
-	 
-	 } 
+	@Autowired
+	CountryService countryService;
+
+	/*
+	 * @RequestMapping("/getAllCountries") public String showForm(){ 
+	 * return
+	 * "countryDetails";
+	 *  }
+	 */
+	@RequestMapping(value = "/getAllCountries", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getCountries(Model model) {
+
+		List listOfCountries = countryService.getAllCountries();
+		model.addAttribute("country", new Country());
+		model.addAttribute("listOfCountries", listOfCountries);
+		return "countryDetails";
+	}
+
+	@RequestMapping(value = "/getCountry/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public Country getCountryById(@PathVariable int id) {
+		return countryService.getCountry(id);
+	}
+
+	@RequestMapping(value = "/addCountry", method = RequestMethod.POST, headers = "Accept=application/json")
+	public String addCountry(@ModelAttribute("country") Country country) {
+		System.out.println("country name before controller"
+				+ country.getCountryName());
+		if (country.getId() == 0) {
+			countryService.addCountry(country);
+		} else {
+			countryService.updateCountry(country);
+		}
+
+		return "redirect:/getAllCountries";
+	}
+
+	@RequestMapping(value = "/updateCountry/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String updateCountry(@PathVariable("id") int id, Model model) {
+		model.addAttribute("country", this.countryService.getCountry(id));
+		model.addAttribute("listOfCountries",
+				this.countryService.getAllCountries());
+		return "countryDetails";
+	}
+
+	@RequestMapping(value = "/deleteCountry/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String deleteCountry(@PathVariable("id") int id) {
+		countryService.deleteCountry(id);
+		return "redirect:/getAllCountries";
+
+	}
 }
