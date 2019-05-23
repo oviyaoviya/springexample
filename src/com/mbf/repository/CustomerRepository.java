@@ -6,5 +6,7 @@ import com.mbf.model.Customer;
 
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
-
+	
+	public Customer findByEmailAddress(String emailAddress);
+	
 }

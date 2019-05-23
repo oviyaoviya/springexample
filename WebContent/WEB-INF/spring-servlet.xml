@@ -45,8 +45,10 @@ http://www.springframework.org/schema/data/jpa http://www.springframework.org/sc
 		ExceptionPage </prop> </props> </property> <property name = "defaultErrorView" 
 		value = "error"/> </bean> -->
 
-
-
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="268435456" />
+	</bean>
 
 	<bean id="ds"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -79,7 +81,7 @@ http://www.springframework.org/schema/data/jpa http://www.springframework.org/sc
 	<bean id="dao" class="com.mbf.repository.EmployeeDao">
 		<property name="template" ref="jt"></property>
 	</bean>
-	
+
 
 	<!-- For generic error -->
 

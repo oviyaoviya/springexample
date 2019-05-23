@@ -39,11 +39,14 @@ td, th {
 	text-align: left;
 	padding: 5px 10px;
 }
+.test {
+color :red;
+}
 </style>
 </head>
 <body>
-	<form:form method="post" modelAttribute="customer"
-		action="${pageContext.request.contextPath}/addCustomer">
+	<form:form method="POST" modelAttribute="customer"
+		action="${pageContext.request.contextPath}/addCustomer" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<th colspan="2">Add Customer Details</th>
@@ -59,7 +62,8 @@ td, th {
 			</tr>
 			<tr>
 				<td><form:label path="emailAddress">EmailAddress:</form:label></td>
-				<td><form:input path="emailAddress"></form:input></td>
+				<td><form:input path="emailAddress"></form:input><p class="test"> ${error}</p></td>
+				<p class="test"> ${error}</p>
 			</tr>
 			<tr>
 				<td><form:label path="mobile">Mobile:</form:label></td>
@@ -77,8 +81,8 @@ td, th {
 				<td><form:input type="date" path="dob"></form:input></td>
 			</tr>
 			<tr>
-				<td><form:label path="profileImage">ProfileImage:</form:label></td>
-				<td><form:input path="profileImage"></form:input></td>
+				<td><form:label path="image">ProfileImage:</form:label></td>
+				<td><form:input type="file" path="image"></form:input></td>
 			</tr>
 			<tr>
 				<td><form:label path="address">Address:</form:label></td>
