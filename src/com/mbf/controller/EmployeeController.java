@@ -44,7 +44,6 @@ public class EmployeeController {
 		return "employeeForm";
 	}
 
-
 	@RequestMapping("/success")
 	public String showFormDetail() {
 		return "success";

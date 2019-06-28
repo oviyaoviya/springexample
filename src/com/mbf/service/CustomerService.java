@@ -1,5 +1,6 @@
 package com.mbf.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,13 +66,14 @@ public class CustomerService {
 	}
 
 	@Transactional
-	public void addCustomer(Customer customer) {
+	public void addCustomer(Customer customer) throws IOException {
 		System.out.println("customer name before Model :" + customer);
 		Date createdAt = new Date();
 		customer.setCreatedAt(createdAt);
 		customer.setUpdatedAt(createdAt);
-		byte[] profileImage = new byte[2];
+		byte[] profileImage = customer.getImage().getBytes();
 		customer.setProfileImage(profileImage);
+		
 		System.out.println("profile image :" + profileImage);
 		customerRepository.save(customer);
 	}

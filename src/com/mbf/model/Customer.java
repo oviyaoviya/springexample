@@ -45,12 +45,57 @@ public class Customer {
 
 	@Transient
 	private MultipartFile image;
+	
+	@Transient
+	private MultipartFile image2;
 
 	@Column(name = "profileImage")
 	private byte[] profileImage;
+	
+	@Column(name = "profileImage2")
+	private String profileImage2;
+	
+
+	public MultipartFile getImage2() {
+		return image2;
+	}
+
+	public String getProfileImage2() {
+		return profileImage2;
+	}
+
+	public void setImage2(MultipartFile image2) {
+		this.image2 = image2;
+	}
+
+	public void setProfileImage2(String profileImage2) {
+		this.profileImage2 = profileImage2;
+	}
 
 	@Column(name = "address")
 	private String address;
+	
+	@Column(name = "state")
+	private String state;
+	
+	@Column(name = "language")
+	private String language;
+
+	public String getState() {
+		return state;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
 	@Column(name = "status")
 	private String status;
